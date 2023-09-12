@@ -1,0 +1,85 @@
+# exercice 1
+def PairOuImpair(entree):
+    """[summary]
+
+    Args:
+        entree ([tableau entier]): [liste de nombres pair ou impair]
+
+    Returns:
+        [Boolean]: [Vrai si plus de nombres pairs que de de nombre impairs]
+    """
+    nbpair = 0
+    nbimpair = 0
+    # au début de chaque tour de boucle
+    #  on regarde si le nombre courant est pair ou impair
+    for nb in entree:
+        if nb % 2 == 0:
+            nbpair += 1
+        else:
+            nbimpair += 1
+    return nbpair >= nbimpair
+
+def test_PairOuImpair():
+    assert PairOuImpair([1,4,6,-2,-5,3,10])==True
+    assert PairOuImpair([-4,5,-11,-56,5,-11])==False
+    assert PairOuImpair([1,4,-2,-5,3,10])==True
+    
+
+# exercice 2
+def min_sup(liste_nombres, valeur):
+    """trouve le plus petit nombre d'une liste supérieur à une certaine valeur
+
+    Args:
+        liste_nombres (list): la liste de nombres
+        valeur (int ou float): la valeur limite du minimum recherché
+
+    Returns:
+        int ou float: le plus petit nombre de la liste supérieur à valeur
+    """
+    res = None
+    # au début de chaque tour de boucle res est le plus petit élément
+    # déjà énuméré supérieur à valeur
+    for elem in liste_nombres:
+        if elem > valeur and res == None:
+            res = elem
+        elif elem > valeur and elem < res:
+            res = elem
+    return res
+
+
+def test_min_sup():
+    assert min_sup([8, 12, 7, 3, 9, 2, 1, 4, 9], 5) == 7
+    assert min_sup([-2, -5, 2, 9.8, -8.1, 7], 0) == 2
+    assert min_sup([5, 7, 6, 5, 7, 3], 10) is None
+    assert min_sup([], 5) is None
+
+
+# exercice 3
+def nb_mots(phrase):
+    """Fonction qui compte le nombre de mots d'une phrase
+
+    Args:
+        phrase (str): une phrase dont les mots sont
+        séparés par des espaces (éventuellement plusieurs)
+
+    Returns:
+        int: le nombre de mots de la phrase
+    """    
+    resultat = 0
+    c1 = ' '
+    # au début de chaque tour de boucle
+    # c1 vaut
+    # c2 vaut
+    # resultat vaut
+    for c2 in phrase:
+        if c1 == ' ' and c2 != ' ':
+            resultat = resultat + 1
+        c1 = c2
+    return resultat
+
+def test_nb_mots():
+    assert nb_mots("bonjour, il fait beau") == 4
+    assert nb_mots("houla!     je    mets beaucoup   d'  espaces    ") == 6
+    assert nb_mots(" ce  test ne  marche pas ") == 5
+    assert nb_mots("") == 0  # celui ci non plus
+
