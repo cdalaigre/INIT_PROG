@@ -1,6 +1,5 @@
 """ Matrices : API n 1 """
 
-
 def matrice(nb_lignes, nb_colonnes, valeur_par_defaut):
     """crée une nouvelle matrice en mettant la valeur par défaut dans chacune de ses cases.
 
@@ -121,7 +120,24 @@ def charge_matrice_str(nom_fichier):
     Returns:
         une matrice de str
     """
-    ...
+    
+    nblignes = 0
+    nbcolonnes = 0
+    liste_valeurs=[]
+
+    with open(nom_fichier, 'r') as file:
+        lignes = file.readlines()
+    
+        for ligne in lignes:
+            l_champs = ligne.split(",")
+            nblignes += 1
+            nbcolonnes = len(l_champs)-1
+            for colonne in range (nbcolonnes):
+                liste_valeurs.append(l_champs[colonne])
+                    
+    return (nblignes, nbcolonnes, liste_valeurs)
+
+#print(charge_matrice_str('matrice.csv'))
 
 
 def sauve_matrice(la_matrice, nom_fichier):
@@ -135,6 +151,16 @@ def sauve_matrice(la_matrice, nom_fichier):
     Returns:
         None
     """
-    file = open(nom_fichier, 'w')
-    
+    nbl = get_nb_lignes(la_matrice)
+    nbc = get_nb_colonnes(la_matrice)
+    lst_vl = la_matrice[2]
+
+    with open(nom_fichier, "w") as file:
+
+        for ligne in range(nbl):
+            for colonne in range(nbc):
+                file.write(f"{lst_vl[ligne*nbc + colonne]},")
+            file.write(f"\n")
+
+#sauve_matrice((3,2,[0,2,4,6,1,5]),"test.csv")    
 
