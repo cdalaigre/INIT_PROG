@@ -3,6 +3,7 @@
     quelle que soit l'API utilisée
 """
 import API_matrice1 as API
+import utilitaires_matrice as utils
 
 def matrice1():
     """ définition d'une matrice pour les tests """
@@ -87,4 +88,24 @@ def test_matrice():
     assert API.matrice(2,6,0)==(2,6,[0,0,0,0,0,0,0,0,0,0,0,0])
     assert API.matrice(2,4,0)==(2,4,[0,0,0,0,0,0,0,0])
     assert API.matrice(2,2,10)==(2,2,[10,10,10,10])
+
+def test_get_ligne():
+    """ tests pour get_ligne """
+    matr1 = matrice1()
+    matr2 = matrice2()
+    matr3 = matrice3()
+    assert utils.get_ligne(matr1,0)==[10,11,12,13]
+    assert utils.get_ligne(matr2,1)==['D','E','F']
+    assert utils.get_ligne(matr3,2)==[4,3,8]
+    assert utils.get_ligne(matr1,3)==None
+
+def test_get_colonne():
+    """ tests pour get_colonne """
+    matr1 = matrice1()
+    matr2 = matrice2()
+    matr3 = matrice3()
+    assert utils.get_colonne(matr1,0)==[10,14,18]
+    assert utils.get_colonne(matr2,1)==['B','E']
+    assert utils.get_colonne(matr3,2)==[6,1,8]
+    assert utils.get_colonne(matr1,4)==None
 
