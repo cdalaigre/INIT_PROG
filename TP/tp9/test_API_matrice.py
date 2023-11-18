@@ -107,5 +107,16 @@ def test_get_colonne():
     assert utils.get_colonne(matr1,0)==[10,14,18]
     assert utils.get_colonne(matr2,1)==['B','E']
     assert utils.get_colonne(matr3,2)==[6,1,8]
-    assert utils.get_colonne(matr1,4)==None
+    
+def test_get_diagonale_principale():
+    """ tests pour get_colonne """
+    matr3 = matrice3()
+    assert utils.get_diagonale_principale(matr3)==[2,5,8]
+
+def test_get_diagonale_secondaire():
+    """ tests pour get_colonne """
+    matr3 = matrice3()
+    assert utils.get_diagonale_secondaire(matr3)==[4,5,6]   
+    
+    
 

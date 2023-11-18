@@ -29,3 +29,25 @@ def get_colonne(matrice, num_colonne):
         return colonne
     
     else: return None
+
+def get_diagonale_principale(matrice):
+    lst_val=matrice[2]
+    nbl = matrice_util.get_nb_lignes(matrice)
+    nbc = matrice_util.get_nb_colonnes(matrice)
+    main_diag=[]
+
+    for ligne in range (nbl):
+        coef = lst_val[ligne*nbc+ligne]
+        main_diag.append(coef)
+    return main_diag
+
+def get_diagonale_secondaire(matrice):
+    lst_val=matrice[2]
+    nbl = matrice_util.get_nb_lignes(matrice)
+    nbc = matrice_util.get_nb_colonnes(matrice)
+    second_diag=[]
+
+    for ligne in range (nbl):
+        coef = lst_val[(2-ligne)*nbc+ligne]
+        second_diag.append(coef)
+    return second_diag
