@@ -138,3 +138,13 @@ def test_is_triangulaire_inf():
     assert utils.is_trinagulaire_inf(matr1)==False
     assert utils.is_trinagulaire_inf(matr2)==False
     assert utils.is_trinagulaire_inf(matr3)==False
+
+def test_bloc():
+    """ tests pour bloc """
+    matr1 = matrice1()
+    matr2 = matrice2()
+    matr3 = matrice3()
+    assert utils.bloc(matr1,0,0,2,3)==(2,3,[10,11,12,14,15,16])
+    assert utils.bloc(matr1,1,2,2,2)==(2,2,[16,17,20,21])
+    assert utils.bloc(matr2,1,0,1,3)==(1,3,['D','E','F'])
+    assert utils.bloc(matr3,0,1,2,2)==(2,2,[7,6,5,1])

@@ -70,7 +70,7 @@ def transpose (matrice):
         for j in range(nbc):
             trans[j][i]=matrix[i][j]
     
-    # coenstruction de la nouvelle liste de valeur
+    # construction de la nouvelle liste de valeur
     for ligne in trans:
         for elem in ligne:
             transpose_val.append(elem)
@@ -98,3 +98,30 @@ def is_trinagulaire_inf(matrice):
     
     return True
 
+def bloc(matrice, ligne, colonne, hauteur, largeur):
+    lst_val=matrice[2]
+    nbl = matrice_util.get_nb_lignes(matrice)
+    nbc = matrice_util.get_nb_colonnes(matrice)
+    matrix=[[0 for _ in range(nbc)] for _ in range(nbl)] 
+    extract=[[0 for _ in range(largeur)] for _ in range(hauteur)]
+    lst_bloc=[]
+
+    if ligne>nbl or colonne>nbc or (ligne+hauteur)>nbl or (colonne+largeur)>nbc:
+        return None
+    
+    # récupération des valeurs de la liste dans un tableau à 2 dimensions
+    for i in range(nbl):
+        for j in range(nbc):
+            matrix[i][j]=lst_val[i*nbc+j]
+
+    #extractiob du bloc
+    for i in range(ligne, ligne+hauteur):
+        for j in range(colonne, colonne+largeur):
+            extract[i-ligne][j-colonne]=matrix[i][j]
+    
+     # construction de la nouvelle liste de valeur
+    for ligne in extract:
+        for elem in ligne:
+            lst_bloc.append(elem)
+    
+    return (hauteur,largeur,lst_bloc)
