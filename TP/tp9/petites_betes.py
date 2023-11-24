@@ -122,8 +122,7 @@ def toutes_les_familles_v2(pokedex):
     mes_familles=set()
     for lesFamilles in pokedex.values():
         #for famille in lesFamilles:
-            #if famille not in mes_familles:
-                # mes_familles.add(famille)
+            # mes_familles.add(famille)
         mes_familles = mes_familles | lesFamilles
     
     return mes_familles
