@@ -129,15 +129,15 @@ def test_transpose():
 
 def test_is_triangulaire_inf():
     """ tests pour is_triangulaire_inf """
-    assert utils.is_trinagulaire_inf((2,2,[1,0,2,3]))==True
-    assert utils.is_trinagulaire_inf((3,3,[1,0,0,2,2,0,3,2,1]))==True
-    assert utils.is_trinagulaire_inf((4,4,[1,0,0,0,2,1,0,0,3,2,1,0,4,3,2,1]))==True
+    assert utils.is_triangulaire_inf((2,2,[1,0,2,3]))==True
+    assert utils.is_triangulaire_inf((3,3,[1,0,0,2,2,0,3,2,1]))==True
+    assert utils.is_triangulaire_inf((4,4,[1,0,0,0,2,1,0,0,3,2,1,0,4,3,2,1]))==True
     matr1 = matrice1()
     matr2 = matrice2()
     matr3 = matrice3()
-    assert utils.is_trinagulaire_inf(matr1)==False
-    assert utils.is_trinagulaire_inf(matr2)==False
-    assert utils.is_trinagulaire_inf(matr3)==False
+    assert utils.is_triangulaire_inf(matr1)==False
+    assert utils.is_triangulaire_inf(matr2)==False
+    assert utils.is_triangulaire_inf(matr3)==False
 
 def test_bloc():
     """ tests pour bloc """
