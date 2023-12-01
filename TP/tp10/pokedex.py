@@ -109,7 +109,11 @@ def attaque_preferee_v2(pokedex):
 
 def appartient_v3(pokemon, pokedex):
     """ renvoie True si pokemon (str) est présent dans le pokedex """
-    ...
+    res=False
+    for values in pokedex.values():
+        if pokemon in values:
+            res=True
+    return res   
 
 
 def toutes_les_attaques_v3(pokemon, pokedex):
@@ -117,7 +121,11 @@ def toutes_les_attaques_v3(pokemon, pokedex):
     param: un pokedex et le nom d'un pokemon (str) qui appartient au pokedex
     resultat: renvoie l'ensemble des types d'attaque du pokemon passé en paramètre
     """
-    ...
+    res = set()
+    for attaque,values in pokedex.items():
+        if pokemon in values: 
+            res.add(attaque)
+    return res
 
 
 def nombre_de_v3(attaque, pokedex):
@@ -126,14 +134,23 @@ def nombre_de_v3(attaque, pokedex):
     resultat: renvoie le nombre de pokemons de ce type d'attaque
     dans le pokedex
     """
-    ...
+    res = 0
+    if attaque in pokedex.keys(): res = len(pokedex[attaque])
+    return res   
 
 
 def attaque_preferee_v3(pokedex):
     """
     Renvoie le nom du type d'attaque qui est la plus fréquente dans le pokedex
     """
-    ...
+    max=0
+    attaque=""
+    for lesAttaques in pokedex.keys():
+        nb =  nombre_de_v3(lesAttaques,pokedex)
+        if  nb > max:
+            max = nb
+            attaque=lesAttaques
+    return attaque
 
 # =====================================================================
 # Transformations
@@ -146,8 +163,15 @@ def v1_to_v2(pokedex_v1):
     param: prend en paramètre un pokedex version 1
     renvoie le même pokedex mais en version 2
     """
-    ...
-
+    pokedex_v2 = dict()
+    for tuple in pokedex_v1:
+        if tuple[0] in pokedex_v2.keys():
+            pokedex_v2[tuple[0]].add(tuple[1]) 
+        else:
+            pokedex_v2[tuple[0]]=set()
+            pokedex_v2[tuple[0]].add(tuple[1])
+    
+    return pokedex_v2
 
 # Version 1 ==> Version 2
 
@@ -156,5 +180,14 @@ def v2_to_v3(pokedex_v2):
     param: prend en paramètre un pokedex version2
     renvoie le même pokedex mais en version3
     """
-    ...
+    pokedex_v3=dict()
+    for pokemon, lesAttaques in pokedex_v2.items():
+        for uneAttaque in lesAttaques:
+            if uneAttaque in pokedex_v3.keys():
+                pokedex_v3[uneAttaque].add(pokemon) 
+            else:
+                pokedex_v3[uneAttaque]=set()
+                pokedex_v3[uneAttaque].add(pokemon)
+    
+    return pokedex_v3
 
