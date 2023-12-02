@@ -2,8 +2,11 @@
     Remarques : tous les tests de ce fichier doivent passer
     quelle que soit l'API utilisée
 """
-import API_matrice1 as API
-import utilitaires_matrice as utils
+# import API_matrice1 as API
+# import utilitaires_matrice1 as utils
+
+import API_matrice2 as API
+import utilitaires_matrice2 as utils
 
 def matrice1():
     """ définition d'une matrice pour les tests """
@@ -47,6 +50,20 @@ def matrice3():
     API.set_val(mat3, 2, 2, 8)
     return mat3
 
+def matrice4():
+    """ définition d'une matrice pour les tests """
+    mat4 = API.matrice(3, 3, None)
+    API.set_val(mat4, 0, 0, 2)
+    API.set_val(mat4, 0, 1, 0)
+    API.set_val(mat4, 0, 2, 0)
+    API.set_val(mat4, 1, 0, 9)
+    API.set_val(mat4, 1, 1, 5)
+    API.set_val(mat4, 1, 2, 0)
+    API.set_val(mat4, 2, 0, 4)
+    API.set_val(mat4, 2, 1, 3)
+    API.set_val(mat4, 2, 2, 8)
+    return mat4
+
 def test_get_nb_lignes():
     """ tests get_nb_lignes """
     matrice_1 = matrice1()
@@ -83,11 +100,6 @@ def test_sauve_charge_matrice():
     API.sauve_matrice(la_matrice, "matrice.csv")
     matrice_bis = API.charge_matrice_str("matrice.csv")
     assert la_matrice == matrice_bis
-
-def test_matrice():
-    assert API.matrice(2,6,0)==(2,6,[0,0,0,0,0,0,0,0,0,0,0,0])
-    assert API.matrice(2,4,0)==(2,4,[0,0,0,0,0,0,0,0])
-    assert API.matrice(2,2,10)==(2,2,[10,10,10,10])
 
 def test_get_ligne():
     """ tests pour get_ligne """
@@ -129,15 +141,14 @@ def test_transpose():
 
 def test_is_triangulaire_inf():
     """ tests pour is_triangulaire_inf """
-    assert utils.is_triangulaire_inf((2,2,[1,0,2,3]))==True
-    assert utils.is_triangulaire_inf((3,3,[1,0,0,2,2,0,3,2,1]))==True
-    assert utils.is_triangulaire_inf((4,4,[1,0,0,0,2,1,0,0,3,2,1,0,4,3,2,1]))==True
     matr1 = matrice1()
     matr2 = matrice2()
     matr3 = matrice3()
+    matr4 = matrice4()
     assert utils.is_triangulaire_inf(matr1)==False
     assert utils.is_triangulaire_inf(matr2)==False
     assert utils.is_triangulaire_inf(matr3)==False
+    assert utils.is_triangulaire_inf(matr4)==True
 
 def test_bloc():
     """ tests pour bloc """
@@ -148,3 +159,30 @@ def test_bloc():
     assert utils.bloc(matr1,1,2,2,2)==(2,2,[16,17,20,21])
     assert utils.bloc(matr2,1,0,1,3)==(1,3,['D','E','F'])
     assert utils.bloc(matr3,0,1,2,2)==(2,2,[7,6,5,1])
+                                       
+def test_somme_matrice():
+    """ tests pour somme matrice """
+    matr1 = matrice1()
+    matr3 = matrice3()
+    matr4 = matrice4()
+    assert API.somme_matrice(matr1,matr1)==[[20, 22, 24, 26], [28, 30, 32, 34], [36, 38, 40, 42]]
+    assert API.somme_matrice(matr3,matr3)==[[4, 14, 12], [18, 10, 2], [8, 6, 16]]
+    assert API.somme_matrice(matr4,matr4)==[[4, 0, 0], [18, 10, 0], [8, 6, 16]]
+
+def test_produit_matrice():
+    """ tests pour somme matrice """
+    matr1 = matrice1()
+    matr3 = matrice3()
+    matr4 = matrice4()
+    assert API.produit_matrice(matr1,matr1)==None
+    assert API.produit_matrice(matr1,matr3)==None
+    assert API.produit_matrice(matr4,matr4)==[[4, 0, 0], [63, 25, 0], [67, 39, 64]]
+    assert API.produit_matrice(matr1,matr4)==None
+    assert API.produit_matrice(matr3,matr4)==[[91, 53, 48], [67, 28, 8], [67, 39, 64]]
+    assert API.produit_matrice(matr3,matr1)==[[226, 241, 256, 271], [178, 193, 208, 223], [226, 241, 256, 271]]
+    assert API.produit_matrice(matr4,matr1)==[[20, 22, 24, 26], [160, 174, 188, 202], [226, 241, 256, 271]]
+    assert API.produit_matrice(matr4,matr3)==[[4, 14, 12], [63, 88, 59], [67, 67, 91]]
+    assert API.produit_matrice(matr3,matr3)==[[91, 67, 67], [67, 91, 67], [67, 67, 91]]
+
+
+

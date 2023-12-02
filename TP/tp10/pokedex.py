@@ -191,3 +191,18 @@ def v2_to_v3(pokedex_v2):
     
     return pokedex_v3
 
+# =====================================================================
+# Petites bêtes
+# =====================================================================
+def pokemons_par_famille (pokedex):
+    ppf=dict()
+
+    for tuple in pokedex:
+        for famille in tuple[1]:
+            if famille in ppf.keys():
+                ppf[famille].add(tuple[0])
+            else:
+                ppf[famille]=set()
+                ppf[famille].add(tuple[0])
+    
+    return ppf
