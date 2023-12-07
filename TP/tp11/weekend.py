@@ -1,13 +1,5 @@
 
 def getNbParticipant(weekend):
-    """_summary_
-
-    Args:
-        weekend (_type_): _description_
-
-    Returns:
-        _type_: _description_
-    """    
     return len(weekend)
 
 def getTotalByPerson(weekend):
@@ -27,14 +19,11 @@ def getTotalDepenses(total_by_person):
     
     return facture
 
-def getCalculRépartition(weekend):
+def getCalculRépartition(NbParticipant, DepensesParParticipant, Facture):
 
     CalculRépartition = dict()
-    NbParticpant = getNbParticipant(weekend)
-    DepensesParParticipant = getTotalByPerson(weekend)
-    Facture = getTotalDepenses(DepensesParParticipant)
-
-    BilanParParticipant = Facture / NbParticpant
+    
+    BilanParParticipant = Facture / NbParticipant
 
     for Participant, TotalPayé in DepensesParParticipant.items():
         if (TotalPayé >= BilanParParticipant): PayerOuRecevoir = ('recevoir', TotalPayé-BilanParParticipant)
@@ -45,7 +34,10 @@ def getCalculRépartition(weekend):
 
 def affiche_bilan_financier(weekend):
 
-    calcul = getCalculRépartition(weekend)
+    NbParticipant = getNbParticipant(weekend)
+    DepensesParParticipant = getTotalByPerson(weekend)
+    Facture = getTotalDepenses(DepensesParParticipant)
+    calcul = getCalculRépartition(NbParticipant, DepensesParParticipant, Facture)
     for Participant, bilan in calcul.items():
         print (Participant + " doit " + bilan[0] + " " + str(bilan[1])+ " euros.")
 
