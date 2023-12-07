@@ -24,7 +24,7 @@ def test_getCalculRépartition():
     nb=weekend.getNbParticipant(weekend_juin)
     tbp=weekend.getTotalByPerson(weekend_juin)
     tot=weekend.getTotalDepenses(tbp)
-    assert weekend.getCalculRépartition(nb, tbp,tot)=={ 'Pierre': ('recevoir',38-152/5), 'Beatrice':('verser',22.40), 'Sasha':('verser',30.40), 'Marie': ('recevoir', 23.60), 'Anna': ('recevoir',21.60) }
+    assert weekend.getCalculRépartition(nb, tbp,tot)=={ 'Pierre': ('recevoir',7.60), 'Beatrice':('verser',22.40), 'Sasha':('verser',30.40), 'Marie': ('recevoir', 23.60), 'Anna': ('recevoir',21.60) }
 
     
 weekend.affiche_bilan_financier(weekend_mai)

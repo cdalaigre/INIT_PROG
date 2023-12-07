@@ -71,8 +71,8 @@ def getCalculRépartition(NbParticipant, DepensesParParticipant, Facture):
     MoyenneSommeAPayerByPerson = GetSommeAPayerByPerson(Facture, NbParticipant)
 
     for Participant, TotalPayéByPerson in DepensesParParticipant.items():
-        if (TotalPayéByPerson >= MoyenneSommeAPayerByPerson): PayerOuRecevoir = ('recevoir', TotalPayéByPerson-MoyenneSommeAPayerByPerson)
-        if (TotalPayéByPerson <= MoyenneSommeAPayerByPerson): PayerOuRecevoir = ('verser', MoyenneSommeAPayerByPerson-TotalPayéByPerson)
+        if (TotalPayéByPerson >= MoyenneSommeAPayerByPerson): PayerOuRecevoir = ('recevoir', round(TotalPayéByPerson-MoyenneSommeAPayerByPerson,2))
+        if (TotalPayéByPerson <= MoyenneSommeAPayerByPerson): PayerOuRecevoir = ('verser', round(MoyenneSommeAPayerByPerson-TotalPayéByPerson,2))
         CalculRépartition[Participant]=PayerOuRecevoir
     
     return CalculRépartition
