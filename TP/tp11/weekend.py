@@ -43,6 +43,18 @@ def getTotalDepenses(total_by_person):
     
     return facture
 
+def GetSommeAPayerByPerson(Facture,NbParticipant):
+    """Calcule la somme moyenne à payer
+
+    Args:
+        NbParticipant (int): nombre de participants
+        Facture (int): montant de la facture
+
+    Returns:
+        float: montsant à payer en moyenne par personne
+    """    
+    return Facture / NbParticipant
+
 def getCalculRépartition(NbParticipant, DepensesParParticipant, Facture):
     """Détermine le montant qu'une personne doit payer ou recevoir
 
@@ -56,11 +68,11 @@ def getCalculRépartition(NbParticipant, DepensesParParticipant, Facture):
     """    
     CalculRépartition = dict()
     
-    BilanParParticipant = Facture / NbParticipant
+    MoyenneSommeAPayerByPerson = GetSommeAPayerByPerson(Facture, NbParticipant)
 
-    for Participant, TotalPayé in DepensesParParticipant.items():
-        if (TotalPayé >= BilanParParticipant): PayerOuRecevoir = ('recevoir', TotalPayé-BilanParParticipant)
-        if (TotalPayé <= BilanParParticipant): PayerOuRecevoir = ('verser', BilanParParticipant-TotalPayé)
+    for Participant, TotalPayéByPerson in DepensesParParticipant.items():
+        if (TotalPayéByPerson >= MoyenneSommeAPayerByPerson): PayerOuRecevoir = ('recevoir', TotalPayéByPerson-MoyenneSommeAPayerByPerson)
+        if (TotalPayéByPerson <= MoyenneSommeAPayerByPerson): PayerOuRecevoir = ('verser', MoyenneSommeAPayerByPerson-TotalPayéByPerson)
         CalculRépartition[Participant]=PayerOuRecevoir
     
     return CalculRépartition
@@ -75,8 +87,8 @@ def affiche_bilan_financier(weekend):
     NbParticipant = getNbParticipant(weekend)
     DepensesParParticipant = getTotalByPerson(weekend)
     Facture = getTotalDepenses(DepensesParParticipant)
-    calcul = getCalculRépartition(NbParticipant, DepensesParParticipant, Facture)
-    for Participant, bilan in calcul.items():
+    Calcul = getCalculRépartition(NbParticipant, DepensesParParticipant, Facture)
+    for Participant, bilan in Calcul.items():
         print (Participant + " doit " + bilan[0] + " " + str(bilan[1])+ " euros.")
 
 
