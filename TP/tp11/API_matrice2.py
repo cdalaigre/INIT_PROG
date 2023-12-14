@@ -1,4 +1,6 @@
 """ Matrices : API n 2 """
+""" Modélisation de matrice numéro 2 """
+""" [ [liste] [liste] ] """
 
 def matrice(nb_lignes, nb_colonnes, valeur_par_defaut=0):
     """crée une nouvelle matrice en mettant la valeur par défaut dans chacune de ses cases.
@@ -277,4 +279,18 @@ def produit_matrice(la_matrice_1, la_matrice_2):
     else:
         return None
 
-   
+def colle_sous_matrice(matrice, sousmatr, l, c):
+    nbl = get_nb_lignes(matrice)
+    nbc = get_nb_colonnes(matrice)
+    hauteur = get_nb_lignes(sousmatr)
+    largeur = get_nb_colonnes(sousmatr)
+
+    if l>nbl or c>nbc or (l+hauteur)>nbl or (c+largeur)>nbc:
+        return None
+
+    for ligne in range (l, l+get_nb_lignes(sousmatr)):
+        for col in range (c, c+get_nb_colonnes(sousmatr)):
+            set_val(matrice, ligne, col, sousmatr[ligne-l][col-c])
+    
+    return matrice
+

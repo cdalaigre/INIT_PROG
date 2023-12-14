@@ -250,8 +250,52 @@ def test_produit_matrice():
     assert API.get_ligne(multi3_3,1)==[67, 91, 67]
     assert API.get_ligne(multi3_3,2)==[67, 67, 91]
 
+def sousmatr1():
+    """ définition d'une matrice pour les tests """
+    ssmtrc1 = API.matrice(2, 2, None)
+    API.set_val(ssmtrc1, 0, 0, 67)
+    API.set_val(ssmtrc1, 0, 1, 42)
+    API.set_val(ssmtrc1, 1, 0, 43)
+    API.set_val(ssmtrc1, 1, 1, 17)
+    return ssmtrc1
 
+def sousmatr2():
+    """ définition d'une matrice pour les tests """
+    ssmtrc2 = API.matrice(1, 2, None)
+    API.set_val(ssmtrc2, 0, 0, 'Q')
+    API.set_val(ssmtrc2, 0, 1, 'X')
+    return ssmtrc2
 
+def sousmatr3():
+    """ définition d'une matrice pour les tests """
+    ssmtrc3 = API.matrice(2, 1, None)
+    API.set_val(ssmtrc3, 0, 0, 'P')
+    API.set_val(ssmtrc3, 1, 0, 'S')
+    return ssmtrc3
 
+def test_colle_sous_matrice():
+    matrice_1 = matrice1()
+    matrice_2 = matrice2()
+    matrice_3 = matrice3()
+
+    sm1 = sousmatr1()
+    matrice_1 = API.colle_sous_matrice(matrice_1, sm1, 0, 0)
+    assert API.get_ligne(matrice_1,0)==[67,42,12,13]
+    assert API.get_ligne(matrice_1,1)==[43,17,16,17]
+    matrice_1 = API.colle_sous_matrice(matrice_1, sm1, 1, 2)
+    assert API.get_ligne(matrice_1,1)==[43,17,67,42]
+    assert API.get_ligne(matrice_1,2)==[18,19,43,17]
+
+    sm2 = sousmatr2()
+    matrice_2 = API.colle_sous_matrice(matrice_2, sm2, 1, 0)
+    assert API.get_ligne(matrice_2,1)==['Q','X','F']
+
+    sm3 = sousmatr3()
+    matrice_2 = API.colle_sous_matrice(matrice_2, sm3, 0, 2)  
+    assert API.get_ligne(matrice_2,0)==['A','B','P']
+    assert API.get_ligne(matrice_2,1)==['Q','X','S']
+    
+    matrice_3 = API.colle_sous_matrice(matrice_3, sm1, 2, 2)
+    assert matrice_3==None
 
 
