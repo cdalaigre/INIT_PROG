@@ -44,3 +44,13 @@ def temps_de_vol_avec_precalcul(n, temps_connus):
             temps_de_vol= temps_connus[element]+suite.index(element)
 
     return temps_de_vol
+
+def Champion_avec_precalcul(n,temps_connus):
+    temps_de_vol=0
+    champion = None
+    for i in range (1,n):
+        if temps_de_vol_avec_precalcul(i, temps_connus)>temps_de_vol:
+            temps_de_vol = temps_de_vol_avec_precalcul(i, temps_connus)
+            champion = i
+    
+    return champion

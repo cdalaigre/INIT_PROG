@@ -25,4 +25,8 @@ def test_Champion():
 def test_temps_de_vol_avec_precalcul():
     assert syracuse.temps_de_vol_avec_precalcul(27, {10: 6, 124: 108}) == 111
     assert syracuse.temps_de_vol_avec_precalcul(20, {10: 6, 124: 108}) == 7
+
+def test_Champion_avec_precalcul():
+    assert syracuse.Champion_avec_precalcul(27,{10: 6, 124: 108}) == 25
+    assert syracuse.Champion_avec_precalcul(20,{10: 6, 124: 108}) == 18
   
