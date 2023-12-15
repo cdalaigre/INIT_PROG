@@ -60,13 +60,17 @@ def temps_de_vol_avec_precalculv2(n, temps_connus):
         if suite in temps_connus.keys():
             temps_de_vol= temps_connus[suite]+i
             return temps_de_vol
+    
+    return i
 
 def Champion_avec_precalcul(n,temps_connus):
     temps_de_vol=0
     champion = None
     for i in range (1,n):
-        if temps_de_vol_avec_precalcul(i, temps_connus)>temps_de_vol:
-            temps_de_vol = temps_de_vol_avec_precalcul(i, temps_connus)
+        tps = temps_de_vol_avec_precalculv2(i, temps_connus)
+        if tps>temps_de_vol:
+            temps_de_vol = tps
             champion = i
     
     return champion
+
