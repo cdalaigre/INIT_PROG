@@ -29,8 +29,9 @@ def Champion(n):
     temps_de_vol=0
     champion = None
     for i in range (1,n):
-        if FlyTime(i)>temps_de_vol:
-            temps_de_vol = FlyTime(i)
+        tps = FlyTime(i)
+        if tps>temps_de_vol:
+            temps_de_vol = tps
             champion = i
     
     return champion
