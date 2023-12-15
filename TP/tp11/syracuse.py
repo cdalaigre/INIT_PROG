@@ -46,6 +46,21 @@ def temps_de_vol_avec_precalcul(n, temps_connus):
 
     return temps_de_vol
 
+def temps_de_vol_avec_precalculv2(n, temps_connus):
+    temps_de_vol=0
+    suite=n
+    i=0
+    while suite !=1: 
+        if suite % 2 == 0:
+            suite = suite//2
+        else:
+            suite = 3 * suite + 1
+        i+=1
+
+        if suite in temps_connus.keys():
+            temps_de_vol= temps_connus[suite]+i
+            return temps_de_vol
+
 def Champion_avec_precalcul(n,temps_connus):
     temps_de_vol=0
     champion = None
