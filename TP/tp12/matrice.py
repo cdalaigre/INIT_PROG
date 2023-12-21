@@ -3,6 +3,8 @@ Une implémentation des matrices 2D en python
 Détailler ici la modélisation choisie en donnant au moins un exemple
 """
 
+import api_matrice as monAPI
+
 def new_matrice(nb_lignes, nb_colonnes, valeur_par_defaut=0):
     """Construit et une nouvelle matrice
 
@@ -17,7 +19,7 @@ def new_matrice(nb_lignes, nb_colonnes, valeur_par_defaut=0):
                  est nb_colonnes
         et dont toutes les valeurs sont à valeur_par_defaut
     """
-    ...
+    return monAPI.creer_matrice(nb_lignes,nb_colonnes)
 
 def get_nb_lignes(matrice):
     """renvoie le nombre de lignes de la matrice
@@ -29,7 +31,7 @@ def get_nb_lignes(matrice):
     Returns:
         int: le nombre de lignes de la matrice
     """
-    ...
+    return monAPI.get_nombre_de_lignes(matrice)
 
 def get_nb_colonnes(matrice):
     """renvoie le nombre de colonnes de la matrice
@@ -41,7 +43,7 @@ def get_nb_colonnes(matrice):
     Returns:
         int: le nombre de colonnes de la matrice
     """
-    ...
+    return monAPI.get_nombre_de_colonnes(matrice)
 
 def get_val(matrice, ligne, colonne):
     """renvoie une valeur de la matrice
@@ -55,7 +57,7 @@ def get_val(matrice, ligne, colonne):
         variable: le contenu de la case de la matrice qui se trouve à la ligne
         numéro ligne et à la colonne numéro colonne
     """
-    ...
+    return monAPI.get_valeur(matrice,ligne,colonne)
 
 def set_val(matrice, ligne, colonne, new_val):
     """modifie le contenu de la case de la matrice qui se trouve à la ligne
@@ -69,7 +71,7 @@ def set_val(matrice, ligne, colonne, new_val):
     Returns:
         None
     """
-    ...
+    monAPI.set_valeur(matrice,ligne,colonne,new_val)
 
 def affiche(matrice):
     """Affiche la matrice sur la sortie standard
@@ -80,7 +82,8 @@ def affiche(matrice):
     Returns:
         None
     """
-    ...
+    for i in range(monAPI.get_nombre_de_lignes(matrice)):
+        print(monAPI.get_ligne(matrice,i))
 
 #-----------------------------------------
 # entrées sorties dans des fichiers

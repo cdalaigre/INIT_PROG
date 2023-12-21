@@ -16,6 +16,7 @@ OUEST = 'q'
 SUD = 'w'
 EST = 's'
 
+import matrice as MAT 
 
 def init(nom_fichier="./labyrinthe1.txt"):
     """Construit le plateau de jeu de la façon suivante :
@@ -29,7 +30,12 @@ def init(nom_fichier="./labyrinthe1.txt"):
     Returns:
         le plateau de jeu avec les MUR, COULOIR, PERSONNAGE et FANTOME
     """
-    ...
+    plateau = MAT.charge_matrice(nom_fichier,'int')
+    MAT.set_val(plateau,0,0,2)
+    MAT.set_val(plateau, MAT.get_nb_lignes(plateau)-1,MAT.get_nb_colonnes(plateau)-1,3)
+
+    return plateau
+
 
 
 def est_sur_le_plateau(le_plateau, position):
@@ -42,7 +48,7 @@ def est_sur_le_plateau(le_plateau, position):
     Returns:
         [boolean]: True si la position est bien sur le plateau
     """
-    ...
+    return True if (0<=position[0]<MAT.get_nb_lignes(le_plateau) and 0<=position[1]<MAT.get_nb_colonnes(le_plateau)) else False
 
 
 def get(le_plateau, position):
@@ -56,7 +62,7 @@ def get(le_plateau, position):
         int: la valeur de la case qui se trouve à la position donnée ou
              None si la position n'est pas sur le plateau
     """
-    ...
+    return MAT.get_val(le_plateau,position[0],position[1]) if est_sur_le_plateau(le_plateau,position) else None
 
 
 def est_un_mur(le_plateau, position):
@@ -69,7 +75,7 @@ def est_un_mur(le_plateau, position):
     Returns:
         bool: True si la case à la position donnée est un MUR, False sinon
     """
-    ...
+    return True if get(le_plateau,position)==MUR else False
 
 
 def contient_fantome(le_plateau, position):
@@ -82,7 +88,7 @@ def contient_fantome(le_plateau, position):
     Returns:
         bool: True si la case à la position donnée est un FANTOME, False sinon
     """
-    ...
+    return True if get(le_plateau,position)==FANTOME else False
 
 def est_la_sortie(le_plateau, position):
     """Détermine si la position donnée est la sortie
@@ -95,7 +101,7 @@ def est_la_sortie(le_plateau, position):
     Returns:
         bool: True si la case à la position donnée est la sortie, False sinon
     """
-    ...
+    return True if ( position[0]==(MAT.get_nb_lignes(le_plateau)-1) and position[1]==(MAT.get_nb_colonnes(le_plateau)-1) ) else False
 
 
 def deplace_personnage(le_plateau, personnage, direction):
@@ -111,7 +117,26 @@ def deplace_personnage(le_plateau, personnage, direction):
     Returns:
         [tuple]: la nouvelle position du personnage
     """
-    ...
+    old = personnage
+    
+    match direction:
+        case 'w': 
+            new = (personnage[0]+1, personnage[1])
+        case 'z':
+            new = (personnage[0]-1, personnage[1])
+        case 's':
+            new = (personnage[0], personnage[1]+1)
+        case 'q':
+            new = (personnage[0], personnage[1]-1)  
+
+    if ( not est_un_mur(le_plateau, new) and not est_la_sortie(le_plateau,new) and est_sur_le_plateau(le_plateau, new) ) :
+        MAT.set_val(le_plateau, old[0], old[1], 0)
+        MAT.set_val(le_plateau, new[0], new[1], 2)
+        return new
+    else :
+        return old
+        
+            
 
 
 def voisins(le_plateau, position):
@@ -124,7 +149,20 @@ def voisins(le_plateau, position):
     Returns:
         set: l'ensemble des positions des cases voisines accessibles
     """
-    ...
+    lesPositionsValides = set()
+    print(position)
+
+    for ligne in range ( position[0]-1, position[0]+2, 1):
+        valide = (ligne,position[1])
+        if est_sur_le_plateau(le_plateau, valide) and not est_un_mur(le_plateau, valide) and valide != position :
+            lesPositionsValides.add(valide)
+
+    for colonne in range ( position[1]-1, position[1]+2, 1):
+        valide = (position[0],colonne)
+        if est_sur_le_plateau(le_plateau, valide) and not est_un_mur(le_plateau, valide) and valide != position :
+            lesPositionsValides.add(valide)
+    
+    return lesPositionsValides
 
 
 def fabrique_le_calque(le_plateau, position_depart):
