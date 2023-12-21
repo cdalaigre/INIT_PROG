@@ -29,8 +29,9 @@ def Champion(n):
     temps_de_vol=0
     champion = None
     for i in range (1,n):
-        if FlyTime(i)>temps_de_vol:
-            temps_de_vol = FlyTime(i)
+        tps = FlyTime(i)
+        if tps>temps_de_vol:
+            temps_de_vol = tps
             champion = i
     
     return champion
@@ -45,12 +46,31 @@ def temps_de_vol_avec_precalcul(n, temps_connus):
 
     return temps_de_vol
 
+def temps_de_vol_avec_precalculv2(n, temps_connus):
+    temps_de_vol=0
+    suite=n
+    i=0
+    while suite !=1: 
+        if suite % 2 == 0:
+            suite = suite//2
+        else:
+            suite = 3 * suite + 1
+        i+=1
+
+        if suite in temps_connus.keys():
+            temps_de_vol= temps_connus[suite]+i
+            return temps_de_vol
+    
+    return i
+
 def Champion_avec_precalcul(n,temps_connus):
     temps_de_vol=0
     champion = None
     for i in range (1,n):
-        if temps_de_vol_avec_precalcul(i, temps_connus)>temps_de_vol:
-            temps_de_vol = temps_de_vol_avec_precalcul(i, temps_connus)
+        tps = temps_de_vol_avec_precalculv2(i, temps_connus)
+        if tps>temps_de_vol:
+            temps_de_vol = tps
             champion = i
     
     return champion
+

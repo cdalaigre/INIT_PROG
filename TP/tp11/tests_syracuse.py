@@ -21,10 +21,16 @@ def test_FlyTime():
 def test_Champion():
     assert syracuse.Champion(27) == 25
     assert syracuse.Champion(5) == 3
+    assert syracuse.Champion(20) == 18
+    assert syracuse.Champion(124) == 97
 
 def test_temps_de_vol_avec_precalcul():
     assert syracuse.temps_de_vol_avec_precalcul(27, {10: 6, 124: 108}) == 111
     assert syracuse.temps_de_vol_avec_precalcul(20, {10: 6, 124: 108}) == 7
+
+def test_temps_de_vol_avec_precalculv2():
+    assert syracuse.temps_de_vol_avec_precalculv2(27, {10: 6, 124: 108}) == 111
+    assert syracuse.temps_de_vol_avec_precalculv2(20, {10: 6, 124: 108}) == 7
 
 def test_Champion_avec_precalcul():
     assert syracuse.Champion_avec_precalcul(27,{10: 6, 124: 108}) == 25
