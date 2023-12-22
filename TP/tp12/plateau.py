@@ -129,16 +129,13 @@ def deplace_personnage(le_plateau, personnage, direction):
         case 'q':
             new = (personnage[0], personnage[1]-1)  
 
-    if ( not est_un_mur(le_plateau, new) and not est_la_sortie(le_plateau,new) and est_sur_le_plateau(le_plateau, new) ) :
+    if ( not est_un_mur(le_plateau, new) and est_sur_le_plateau(le_plateau, new) ) :
         MAT.set_val(le_plateau, old[0], old[1], 0)
         MAT.set_val(le_plateau, new[0], new[1], 2)
         return new
     else :
         return old
         
-            
-
-
 def voisins(le_plateau, position):
     """Renvoie l'ensemble des positions cases voisines accessibles de la position renseignées
        Une case accessible est une case qui est sur le plateau et qui n'est pas un mur
@@ -150,7 +147,6 @@ def voisins(le_plateau, position):
         set: l'ensemble des positions des cases voisines accessibles
     """
     lesPositionsValides = set()
-    print(position)
 
     for ligne in range ( position[0]-1, position[0]+2, 1):
         valide = (ligne,position[1])
@@ -177,7 +173,16 @@ def fabrique_le_calque(le_plateau, position_depart):
        position_de_depart est à 0 les autres cases contiennent la longueur du
        plus court chemin pour y arriver (les murs et les cases innaccessibles sont à None)
     """
-    ...
+    calque = MAT.new_matrice(MAT.get_nb_lignes(le_plateau), MAT.get_nb_colonnes(le_plateau), None)
+    MAT.set_val(calque,position_depart[0],position_depart[1],0)
+    lesPositionsValides = voisins(le_plateau,position_depart)
+
+
+    for position in lesPositionsValides:
+        if MAT.get_val(calque,position[0],position[1]) is None:
+            MAT.set_val(calque,position[0],position[1],1)
+        else:
+            MAT.set_val(calque,position[0],position[1], MAT.get_val(calque,position[0],position[1])+1)
 
 
 def fabrique_chemin(le_plateau, position_depart, position_arrivee):
