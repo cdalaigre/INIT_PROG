@@ -19,7 +19,12 @@ def new_matrice(nb_lignes, nb_colonnes, valeur_par_defaut=0):
                  est nb_colonnes
         et dont toutes les valeurs sont à valeur_par_defaut
     """
-    return monAPI.creer_matrice(nb_lignes,nb_colonnes)
+    matrice = monAPI.creer_matrice(nb_lignes,nb_colonnes)
+    for i in range (nb_lignes):
+        for j in range (nb_colonnes):
+            set_val(matrice,i,j,valeur_par_defaut)
+    
+    return matrice
 
 def get_nb_lignes(matrice):
     """renvoie le nombre de lignes de la matrice

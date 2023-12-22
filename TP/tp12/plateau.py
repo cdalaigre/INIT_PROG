@@ -173,17 +173,46 @@ def fabrique_le_calque(le_plateau, position_depart):
        position_de_depart est à 0 les autres cases contiennent la longueur du
        plus court chemin pour y arriver (les murs et les cases innaccessibles sont à None)
     """
-    calque = MAT.new_matrice(MAT.get_nb_lignes(le_plateau), MAT.get_nb_colonnes(le_plateau), None)
+
+    #création du calque
+    nb_lignes = MAT.get_nb_lignes(le_plateau)
+    nb_colonnes = MAT.get_nb_colonnes(le_plateau)
+    calque = MAT.new_matrice(nb_lignes, nb_colonnes , None )
     MAT.set_val(calque,position_depart[0],position_depart[1],0)
-    lesPositionsValides = voisins(le_plateau,position_depart)
+    
+    i=0                                 #nombre de tour de boucle, mais représente aussi la valeur à mettre dans une case pour le tour considéré
+    fin=(nb_lignes-1,nb_colonnes-1)     #position de la case d'arrivée
+    changed=True
 
+    while ( get(calque,fin) is None or changed==True):      
+    # tant que la case d'arrivée n'est pas atteinte (donc None) ou tant qu'il y a des changements
+            
+        for ligne in range (nb_lignes):
+            for colonne in range (nb_colonnes):
+                #parcours du calque et sauvegarde de la position actuelle
+                position = (ligne,colonne)
 
-    for position in lesPositionsValides:
-        if MAT.get_val(calque,position[0],position[1]) is None:
-            MAT.set_val(calque,position[0],position[1],1)
-        else:
-            MAT.set_val(calque,position[0],position[1], MAT.get_val(calque,position[0],position[1])+1)
+                #détermination des 4 voisins du calque
+                lesVoisinsSurCalque = { (position[0]-1,position[1]), (position[0]+1,position[1]), (position[0],position[1]-1), (position[0],position[1]+1) }
+                
+                #pour chaque voisin
+                for leVoisinSurCalque in lesVoisinsSurCalque:
 
+                    # si le voisin est marqué d'une valeur (i) et que la position courante est None sur le calque et valide sur le plateau
+                    if get(calque,leVoisinSurCalque)==i and get(calque,position) == None and not est_un_mur(le_plateau,position):
+
+                        #modification de la valeur de la case à la position courante (i+1)
+                        MAT.set_val(calque,position[0],position[1], i+1)
+                        changed = True
+
+                    else :
+                        #sinon pas de changement
+                        changed = False
+        
+        # GO pour le tour suivant
+        i=i+1
+
+    return calque
 
 def fabrique_chemin(le_plateau, position_depart, position_arrivee):
     """Renvoie le plus court chemin entre position_depart position_arrivee
@@ -197,7 +226,25 @@ def fabrique_chemin(le_plateau, position_depart, position_arrivee):
         list: Une liste de positions entre position_arrivee et position_depart
         qui représente un plus court chemin entre les deux positions
     """
-    ...
+   
+    calque = fabrique_le_calque(le_plateau,position_depart)
+    top = get(calque,position_arrivee)
+    chemin=[]
+    chemin.append(position_arrivee)
+    actuelle = position_arrivee
+
+    for decroissant in range(top-1,0,-1):
+        
+        #détermination des 4 voisins de la position actuelle
+        lesVoisins = { (actuelle[0]-1,actuelle[1]), (actuelle[0]+1,actuelle[1]), (actuelle[0],actuelle[1]-1), (actuelle[0],actuelle[1]+1) }
+
+        #parmi les voisins, si un voisin contient la valeur du compteur decroissant, on le stocke dans le chemin, et la position actuelle devient celle stockée.
+        for leVoisin in lesVoisins:
+            if get(calque,leVoisin)==decroissant :
+                chemin.append(leVoisin)
+                actuelle = leVoisin
+
+    return chemin
 
 
 def deplace_fantome(le_plateau, fantome, personnage):
@@ -211,4 +258,25 @@ def deplace_fantome(le_plateau, fantome, personnage):
     Returns:
         [tuple]: la nouvelle position du FANTOME
     """
-    ...
+    if (fantome[0]>personnage[0] and fantome[1]>personnage[1]):
+        chemin = fabrique_chemin(le_plateau, personnage, fantome)
+        print(chemin)
+        old = chemin[0]
+        new = chemin[1]
+        print(new)
+        print(old)
+        MAT.set_val(le_plateau,old[0],old[1],0)
+        MAT.set_val(le_plateau,new[0],new[1],3)
+    elif (fantome[0]<personnage[0] and fantome[1]<personnage[1]):
+        chemin = fabrique_chemin(le_plateau, fantome,personnage)
+        print(chemin)
+        new = chemin[-1]
+        print(new)
+        print(fantome)
+        MAT.set_val(le_plateau,new[0],new[1],3)
+        MAT.set_val(le_plateau,fantome[0],fantome[1],0)
+    else:
+        new=fantome
+
+    return new
+
